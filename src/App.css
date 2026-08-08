@@ -1,0 +1,10 @@
+@import "tailwindcss";
+html, body, #root {
+  user-select: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden; /* Prevents awkward double-scrollbar scrolling */
+  background-color: #eae8e1; /* zinc-950 */
+}
