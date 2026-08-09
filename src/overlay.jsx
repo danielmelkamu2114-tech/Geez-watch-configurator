@@ -234,14 +234,14 @@ function Custom() {
           
         <ul className=' bg-black/70  mask-t-from-0% text-white/80 font-semibold items-center  flex-row sm:flex sm:flex-1 sm:justify-center gap-30  sm:gap-10 sm:mt-33 sm:py-3 sm:my-14  text-1xl '>
            <li className=' hidden sm:flex relative group cursor-pointer py-1  hover:text-amber-200'>
-                  <button onClick={()=>{state.strapType='metal' }}  className='hover:text-amber-200'>Metal</button>
-<span className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-amber-500 transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full ${
-      snap.strapType === 'metal' ? 'w-full' : 'w-0'
-    }`} />      </li>            
-            <li className='sm:flex relative group cursor-pointer py-1 hover:text-amber-200'>
                   <button onClick={()=>{state.strapType='Golden' }}  className='hover:text-amber-200'>Golden</button>
 <span className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-amber-500 transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full ${
       snap.strapType === 'Golden' ? 'w-full' : 'w-0'
+    }`} />      </li>            
+            <li className='sm:flex relative group cursor-pointer py-1 hover:text-amber-200'>
+                  <button onClick={()=>{state.strapType='metal' }}  className='hover:text-amber-200'>Metal</button>
+<span className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-amber-500 transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full ${
+      snap.strapType === 'metal' ? 'w-full' : 'w-0'
     }`} />      </li>            
             <li className='sm:flex relative group cursor-pointer py-1 hover:text-amber-200'>
                   <button onClick={()=>{state.strapType='leather' }}  className='hover:text-amber-200'>Leather</button>

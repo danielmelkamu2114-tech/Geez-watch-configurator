@@ -6,20 +6,24 @@ Files: public/watch_model.glb [7.14MB] > C:\Users\danie\OneDrive\Documents\GitHu
 
 import React from 'react'
 import { useGLTF } from '@react-three/drei'
+import { ThinGlassMaterial } from './Brandmaterial'
+import { state } from './Store'
+import { useSnapshot } from 'valtio'
 
 export function Watch_model(props) {
   const { nodes, materials } = useGLTF('/watch_model-transformed.glb')
+  const snap = useSnapshot(state)
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes['strap-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes.hodlder_Baked.geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes.stich_Baked.geometry} material={materials['MergedBake_Baked.002']} />
+      <mesh geometry={nodes['strap-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='metal'} />
+      <mesh geometry={nodes.hodlder_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='Golden'}/>
+      <mesh geometry={nodes.stich_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'} />
       <mesh geometry={nodes.bar_Baked.geometry} material={materials['MergedBake_Baked.002']} />
-      {/* <mesh geometry={nodes.glass_Baked.geometry} material={materials['MergedBake_Baked.002']} /> */}
-      <mesh geometry={nodes.goma_Baked.geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes.spil_Baked.geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes.strap_gold_Baked.geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes.strap_leather_Baked.geometry} material={materials['MergedBake_Baked.002']} />
+      <mesh geometry={nodes.glass_Baked.geometry} ><ThinGlassMaterial/></mesh>
+      <mesh geometry={nodes.goma_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'} />
+      <mesh geometry={nodes.spil_Baked.geometry} material={materials['MergedBake_Baked.002']}visible={snap.strapType=='leather'}  />
+      <mesh geometry={nodes.strap_gold_Baked.geometry} material={materials['MergedBake_Baked.002']}visible={snap.strapType=='Golden'}  />
+      <mesh geometry={nodes.strap_leather_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'}  />
       <mesh geometry={nodes.top_metal_Baked.geometry} material={materials['MergedBake_Baked.002']} />
       <mesh geometry={nodes.volume_Baked.geometry} material={materials['MergedBake_Baked.002']} />
       <mesh geometry={nodes.hand_hour_Baked.geometry} material={materials['MergedBake_Baked.002']} position={[0, -0.391, 0]} />
@@ -39,8 +43,8 @@ export function Watch_model(props) {
       <mesh geometry={nodes.hour_9_Baked.geometry} material={materials['MergedBake_Baked.002']} position={[0.012, -0.391, 0.057]} />
       <mesh geometry={nodes.inside_Baked.geometry} material={materials['MergedBake_Baked.002']} position={[0, -0.391, 0]} />
       <mesh geometry={nodes.minute_indicators_Baked.geometry} material={materials['MergedBake_Baked.002']} position={[0, -0.391, 0]} />
-      <mesh geometry={nodes['bottom-metal_2_Baked'].geometry} material={materials['MergedBake_Baked.002']} />
-      <mesh geometry={nodes['bottom-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']} />
+      <mesh geometry={nodes['bottom-metal_2_Baked'].geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='metal'} />
+      <mesh geometry={nodes['bottom-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='metal'}  />
     </group>
   )
 }
