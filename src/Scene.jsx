@@ -14,6 +14,7 @@ import * as THREE from 'three'
 import { RectAreaLightHelper } from 'three-stdlib'
 import { RectAreaLightUniformsLib } from 'three-stdlib'
 import { useEffect } from 'react'
+import { Lightformer } from '@react-three/drei'
 
 
 
@@ -30,7 +31,7 @@ const Scene = () => {
 useHelper(dirLightRef, THREE.DirectionalLightHelper, 1, 'red')
 useHelper(dirLightRef2, THREE.DirectionalLightHelper, 1, 'green')
 
-useHelper(rectLightRef, RectAreaLightHelper, 'cyan')
+// useHelper(rectLightRef, RectAreaLightHelper, 'cyan')
 useHelper(rectLightRef1, RectAreaLightHelper, 'cyan')
 
   const snap = useSnapshot(state)
@@ -59,7 +60,16 @@ useHelper(rectLightRef1, RectAreaLightHelper, 'cyan')
     <>
     
     <PerspectiveCamera   fov={45}/>
-  <Environment files={'studio_small_05_1k.hdr'} environmentIntensity={30} environmentRotation={[1.15,1,2]}/>
+  <Environment files={'studio_small_05_1k.hdr'} environmentIntensity={2} environmentRotation={[1.15,1,2]}>
+    <Lightformer
+    form="rect"
+    intensity={0}
+    color="#ffffff"
+    position={[5, 5, 5]}
+    scale={[10, 10, 1]}
+    target={[0, 0, 0]}
+  />
+   </Environment>
     {/* <directionalLight intensity={30} position={[1,-2,3]} ref={dirLightRef}/> */}
     {/* <directionalLight intensity={2} position={[-8,-2,5]} scale={1} ref={dirLightRef2} /> */}
 {/* <directionalLight
@@ -80,9 +90,9 @@ useHelper(rectLightRef1, RectAreaLightHelper, 'cyan')
         color="#ffffff"
       />  */}
            <rectAreaLight    ref={rectLightRef}
-        width={4}
-        height={3}
-        intensity={30}
+        width={2}
+        height={2}
+        intensity={40}
         rotation={[-0.6,0.8,0]}
         position={[0,0.5,4]}
         color="#ffffff"

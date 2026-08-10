@@ -11,7 +11,7 @@ const App = () => {
       <div className='absolute inset-0 z-20'>
         <Canvas  gl={{
     toneMapping: THREE.AgXToneMapping,
-    toneMappingExposure: 0.09,
+    toneMappingExposure: 1,
   }}>
           <Scene />
         </Canvas>

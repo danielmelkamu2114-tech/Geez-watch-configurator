@@ -208,8 +208,9 @@ function Pic(){
 {!snap.intro && (
           <>
             
-            <ColorPicker  />
-              <Custom />
+ {(snap.strapType === 'leather' || snap.strapType === 'metal') && <ColorPicker />}
+    {snap.strapType === 'Golden' && <ColorPicker1 />}             
+    <Custom />
           </>
         )}     </div>
    
@@ -288,12 +289,12 @@ function Custom() {
 
   // Color palette options with display values and hex colors
   const colors = [
-    { name: 'black', hex: '#000000' },
-    { name: 'red', hex: '#EF4444' },
-    { name: 'brown', hex: '#8B4513' } // Swapped duplicate black for brown
+    { name: 'brown', hex: '#bb8663' },
+    { name: 'red', hex: '#c23838' },
+    { name: 'black', hex: '#000000' } // Swapped duplicate black for brown
   ]
 
-  return (<section ref={colorchangeref}> <div className='text-amber-50 inset-0 z-40 text-center'> 
+  return (<section > <div ref={colorchangeref} className='text-amber-50 inset-0 z-40 text-center'> 
 
     <div className="flex justify-end gap-3  ">
       <ul className="flex flex-col gap-4">
@@ -320,7 +321,80 @@ function Custom() {
         })}
       </ul>
     </div> </div>
+
+   
     </section> 
-  )
-}
+  )}
+
+ function ColorPicker1() {
+  const snap = useSnapshot(state)
+  const colorchangeref = useRef(null)
+  
+
+     useGSAP(()=>{
+    if(state.strapType=='leather')gsap.to(colorchangeref.current, {
+      opacity:0,
+      duration:0.5,
+      ease:'expo.out'
+    })
+      if(state.strapType=='Golden') gsap.to(colorchangeref.current, {
+    opacity:100,
+      duration:2,
+      ease:'expo.inOut'
+
+    })
+          if(state.strapType=='metal') gsap.to(colorchangeref.current, {
+      opacity:0,
+      duration:0.5,
+      ease:'expo.out'
+
+    })
+
     
+
+
+
+  },[snap.strapType])
+
+
+
+  // Color palette options with display values and hex colors
+  const colors = [
+    { name: 'gold', hex: '#FFDC72' },
+    { name: 'white', hex: '#ffffff' },
+    { name: 'black', hex: '#000000' } // Swapped duplicate black for brown
+  ]
+
+  return (<section > <div ref={colorchangeref} className='text-amber-50 inset-0 z-40 text-center'> 
+
+    <div className="flex justify-end gap-3  ">
+      <ul className="flex flex-col gap-4">
+        {colors.map((colorItem) => {
+          const isSelected = snap.goldcolor === colorItem.hex
+
+          return (
+            <li key={colorItem.hex}>
+              <button
+                type="button"
+                onClick={() => {
+                  state.goldcolor = colorItem.hex
+                }}
+                style={{ backgroundColor: colorItem.hex }}
+                className={`
+                  w-8 h-8 rounded-full border-2 transition-all duration-200 cursor-pointer
+                  hover:scale-125
+                  ${isSelected ? 'scale-125 border-white ring-2 ring-black shadow-lg' : 'border-transparent opacity-80 hover:opacity-100'}
+                `}
+                title={colorItem.name}
+              />
+            </li>
+          )
+        })}
+      </ul>
+    </div> </div>
+
+   
+    </section> 
+  )}
+
+ 

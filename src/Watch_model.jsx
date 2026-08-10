@@ -9,21 +9,86 @@ import { useGLTF } from '@react-three/drei'
 import { ThinGlassMaterial } from './Brandmaterial'
 import { state } from './Store'
 import { useSnapshot } from 'valtio'
+import { useMemo } from 'react'
+import { useEffect } from 'react'
+import * as THREE from 'three'
 
 export function Watch_model(props) {
   const { nodes, materials } = useGLTF('/watch_model-transformed.glb')
   const snap = useSnapshot(state)
+
+   const bakedMat = materials['MergedBake_Baked.002']
+
+  // fix color space on the SHARED material once — clones inherit the same texture refs
+ useEffect(() => {
+    if (!bakedMat) return
+
+    // Fix Color Spaces
+    if (bakedMat.map) bakedMat.map.colorSpace = THREE.SRGBColorSpace
+    if (bakedMat.roughnessMap) bakedMat.roughnessMap.colorSpace = THREE.NoColorSpace
+    if (bakedMat.normalMap) {
+      bakedMat.normalMap.colorSpace = THREE.NoColorSpace
+      // CRITICAL FIX 1: Boost Normal Map Intensity (Try 1.5 to 3.0)
+      bakedMat.normalScale.set(1, -1) // Y is inverted (-2.0) to fix OpenGL normal lighting
+    }
+    if (bakedMat.metalnessMap) bakedMat.metalnessMap.colorSpace = THREE.NoColorSpace
+    if (bakedMat.aoMap) bakedMat.aoMap.colorSpace = THREE.NoColorSpace
+
+    bakedMat.needsUpdate = true
+  }, [bakedMat])
+
+const strapMetalMat = useMemo(() => bakedMat.clone(), [bakedMat])
+
+const strapGoldMat = useMemo(() => {
+  const mat = bakedMat.clone()
+  
+  mat.map = null 
+  
+  mat.color = new THREE.Color(snap.goldcolor) 
+  
+  mat.metalness = 1.0  // Pure metal reflection
+  mat.roughness = 0.6 // Smooth metallic sheen (adjust to match Blender)
+  
+  // 4. Ensure Normal Map & AO Map stay intact for knurling depth!
+  // mat.normalMap and mat.aoMap remain attached from bakedMat automatically
+  
+  mat.needsUpdate = true
+  return mat
+}, [bakedMat, snap.goldcolor])
+const strapLeatherMat = useMemo(() => {
+  const mat = bakedMat.clone()
+  mat.color = new THREE.Color(snap.leatherColor)
+  mat.metalness = 0.05 // Non-metallic
+  mat.roughness = 0.5  // Satin/Matte surface
+
+  mat.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <map_fragment>',
+      `
+      #ifdef USE_MAP
+        vec4 sampledTexel = texture2D( map, vMapUv );
+        // Convert RGB to Grayscale Luminance
+        float gray = dot(sampledTexel.rgb, vec3(0.299, 0.587, 0.114));
+        // Preserve texture detail as grayscale, then multiply with custom color
+        diffuseColor *= vec4(vec3(gray), sampledTexel.a);
+      #endif
+      `
+    )
+  }
+  mat.needsUpdate = true
+  return mat
+}, [bakedMat, snap.leatherColor])
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes['strap-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='metal'} />
+      <mesh geometry={nodes['strap-metal_Baked'].geometry} material={materials['MergedBake_Baked.002']}  visible={snap.strapType=='metal'} />
       <mesh geometry={nodes.hodlder_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='Golden'}/>
-      <mesh geometry={nodes.stich_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'} />
+      <mesh geometry={nodes.stich_Baked.geometry} material={strapLeatherMat} visible={snap.strapType=='leather'} />
       <mesh geometry={nodes.bar_Baked.geometry} material={materials['MergedBake_Baked.002']} />
       <mesh geometry={nodes.glass_Baked.geometry} ><ThinGlassMaterial/></mesh>
-      <mesh geometry={nodes.goma_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'} />
+      <mesh geometry={nodes.goma_Baked.geometry} material={strapLeatherMat} visible={snap.strapType=='leather'} />
       <mesh geometry={nodes.spil_Baked.geometry} material={materials['MergedBake_Baked.002']}visible={snap.strapType=='leather'}  />
-      <mesh geometry={nodes.strap_gold_Baked.geometry} material={materials['MergedBake_Baked.002']}visible={snap.strapType=='Golden'}  />
-      <mesh geometry={nodes.strap_leather_Baked.geometry} material={materials['MergedBake_Baked.002']} visible={snap.strapType=='leather'}  />
+      <mesh geometry={nodes.strap_gold_Baked.geometry} material={strapGoldMat} visible={snap.strapType=='Golden'}  />
+      <mesh geometry={nodes.strap_leather_Baked.geometry} material={strapLeatherMat} visible={snap.strapType=='leather'}  />
       <mesh geometry={nodes.top_metal_Baked.geometry} material={materials['MergedBake_Baked.002']} />
       <mesh geometry={nodes.volume_Baked.geometry} material={materials['MergedBake_Baked.002']} />
       <mesh geometry={nodes.hand_hour_Baked.geometry} material={materials['MergedBake_Baked.002']} position={[0, -0.391, 0]} />
