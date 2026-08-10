@@ -15,12 +15,18 @@ import { RectAreaLightHelper } from 'three-stdlib'
 import { RectAreaLightUniformsLib } from 'three-stdlib'
 import { useEffect } from 'react'
 import { Lightformer } from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
 
 
 
 
 
 const Scene = () => {
+
+  const { viewport } = useThree()
+
+  const isMobile = window.innerWidth < 768
+  const responsiveScale = isMobile ? 0.6 : 1.0
   const modelref = useRef(null)
   const dirLightRef = useRef()
     const dirLightRef2 = useRef()
@@ -102,7 +108,7 @@ useHelper(rectLightRef1, RectAreaLightHelper, 'cyan')
     <OrbitControls/>      
       {/* <Stats/> */}
 
-        <group ref={modelref} Scale={30} position={[0,-70,0]}  rotation={[3,2,0.4]}>
+        <group ref={modelref} scale={responsiveScale} position={[0,-70,0]}  rotation={[3,2,0.4]}>
             <Watch_model />
         </group>
     </>
