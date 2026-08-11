@@ -121,11 +121,13 @@ function Pic(){
     const text5 = useRef()
  
     const snap = useSnapshot(state)
+    const { progress, active } = useProgress()
 
    
  useGSAP(()=>{
  const split1text = new SplitText(text1.current, {type:"lines"})
  const split2text = new SplitText(text2.current, {type:"lines"})
+ if (active || progress < 100) return
 
 
   if(snap.intro) {gsap.from(split1text.lines, {
