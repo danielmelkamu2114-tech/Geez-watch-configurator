@@ -189,7 +189,7 @@ function Pic(){
      })
     
     }
-  },[snap.intro])
+  },[snap.intro,active, progress])
 
 
 
