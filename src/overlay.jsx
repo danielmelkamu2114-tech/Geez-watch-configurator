@@ -10,6 +10,7 @@ gsap.registerPlugin( SplitText, useGSAP);
 import { state } from './Store'
 import { snapshot, useSnapshot } from 'valtio'
 import { watch } from 'valtio/utils'
+import { useProgress } from '@react-three/drei'
 
 
 const Overlay = () => {
