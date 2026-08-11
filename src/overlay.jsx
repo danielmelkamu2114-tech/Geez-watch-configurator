@@ -25,19 +25,27 @@ const Overlay = () => {
    })
   return (<>
 
-        <picture className="absolute inset-0 w-full h-full object-cover z-0">
-         {snap.intro ?  ( <><source srcSet='./heroimagedesktop.png' media="(min-width: 1025px)" />
-          <img 
-            src="./heroimagemobile.png" 
-            alt="Geez Hero Background" 
-            className="w-full h-full object-cover"
-          /></>): (<><source srcSet='./configimagedesktop.png' media="(min-width: 1025px)" />
-          <img 
-            src="./configimagemobile.png" 
-            alt="Geez Hero Background" 
-            className="w-full h-full object-cover"
-          /> </>) }
-        </picture>
+   <picture className="absolute inset-0 w-full h-full object-cover z-0">
+  {snap.intro ? (
+    <>
+      <source srcSet="/heroimagedesktop.webp" media="(min-width: 768px)" />
+      <img 
+        src="/heroimagemobile.webp" 
+        alt="Geez Hero Background" 
+        className="w-full h-full object-cover"
+      />
+    </>
+  ) : (
+    <>
+      <source srcSet="/configimagedesktop.webp" media="(min-width: 768px)" />
+      <img 
+        src="/configimagemobile.webp" 
+        alt="Geez Configurator Background" 
+        className="w-full h-full object-cover"
+      />
+    </>
+  )}
+</picture>
       
         
 
