@@ -198,14 +198,13 @@ function Pic(){
         <div  className='text-white/30  mt-50 sm:mt-30 mx-13  flex flex-col '>
             
             <div ref={text5} className='text-orange-100/20 underline text-xs  underline-offset-8 '>THE CRAFTED BEYOND PRECISION</div>
-            <div ref={text1} className='text-white/50 text-5xl sm:text-8xl  text-center sm:text-left mask-b-from-neutral-100 font-serif'>
+            <div ref={text1} className='  text-white/80 text-5xl sm:text-8xl  text-center sm:text-left mask-b-from-neutral-100 font-serif'>
                 Every second <br/> Tells a legacy !
             </div>
-            <div ref={text2} className='text-sm py-5 pb-10 text-center sm:text-left'>
-                Lorem ipsum dolor sit amet consectetur  <br/>
-                 elit. Quam corporis eaque aspernatur labore  <br/>
-                  tempore, unde dolorum omnis fuga enim quidem voluptatum
-                  
+            <div ref={text2} className=' text-sm py-5 sm:py-10 pb-15 text-center sm:text-left'>
+               Timeless craftsmanship and decades of history, captured in every mechanical tick on your wrist.
+                 <div className='hidden sm:flex'>Crafted with timeless precision, a vintage watch carries decades of history right on your wrist.<br/>
+                  Each patina mark and mechanical tick tells a story of uncompromised craftsmanship that only grows richer with age.</div>
             </div>
             <div className='flex gap-10 pl-5'>
                 <button ref={text3} className='bg-orange-300/50 text-white/50 font-semibold p-2 shadow hover:bg-orange-300/70 hover:shadow-olive-700/50 hover:text-white  hover:shadow-2xl hover:-translate-y-0.5 pointer-events-auto  hover:scale-100 transition-all duration-300 ease-in-out'>Shop now!</button>
