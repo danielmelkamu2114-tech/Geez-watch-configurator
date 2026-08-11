@@ -209,12 +209,12 @@ function Pic(){
                  <div className='hidden sm:flex'>Crafted with timeless precision, a vintage watch carries decades of history right on your wrist.<br/>
                   Each patina mark and mechanical tick tells a story of uncompromised craftsmanship that only grows richer with age.</div>
             </div>
-            <div className='flex gap-10 pl-5'>
+            <div className='flex gap-10 pl-5 z-40 pointer-events-auto'>
                 <button ref={text3} className='bg-orange-300/50 text-white/50 font-semibold p-2 shadow hover:bg-orange-300/70 hover:shadow-olive-700/50 hover:text-white  hover:shadow-2xl hover:-translate-y-0.5 pointer-events-auto  hover:scale-100 transition-all duration-300 ease-in-out'>Shop now!</button>
                 <button ref={text4} className='flex gap-1.5 items-center border-amber-100/30 border-s text-white/50 font-semibold p-2 shadow   hover:text-white  hover:shadow-2xl hover:shadow-olive-700/50 hover:-translate-y-0.5 pointer-events-auto  hover:scale-100 transition-all duration-300 ease-in-out'> watch Film <Play className="w-5 h-5 fill-black s" strokeWidth={1.5} /></button>
 
             </div>
-<div className="fixed  w-screen pr-30  h-screen mt-40 z-50 pointer-events-auto">
+<div className="fixed  w-screen pr-30  h-screen mt-40 z-50 pointer-events-none">
 {!snap.intro && (
           <>
             
@@ -243,7 +243,7 @@ function Custom() {
         <section className='sm:pr-30'>
         <div ref={strapref} className=' text-amber-50 text-1xl sm:text-lg  inset-0   z-40  text-center   '> 
           
-        <ul className=' bg-black/70  mask-t-from-0% text-white/80 font-semibold items-center  flex-row sm:flex sm:flex-1 sm:justify-center gap-30  sm:gap-10 sm:mt-33 sm:py-3 sm:my-14  text-1xl '>
+        <ul className=' bg-black/70  mask-t-from-0% text-white/80 font-semibold items-center  flex-row sm:flex sm:flex-1 sm:justify-center gap-30  sm:gap-10 sm:mt-33 sm:py-3 sm:my-14  text-1xl pointer-events-auto '>
            <li className='  sm:flex relative group cursor-pointer py-1  hover:text-amber-200'>
                   <button onClick={()=>{state.strapType='Golden' }}  className='hover:text-amber-200'>Golden</button>
 <span className={`absolute bottom-0 left-1/2 h-[2px] rounded-full bg-amber-500 transition-all duration-300 ease-out -translate-x-1/2 group-hover:w-full ${
@@ -307,7 +307,7 @@ function Custom() {
   return (<section > <div ref={colorchangeref} className='text-amber-50 inset-0 z-40 text-center'> 
 
     <div className="flex justify-end gap-3  ">
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 pointer-events-auto">
         {colors.map((colorItem) => {
           const isSelected = snap.leatherColor === colorItem.hex
 
@@ -378,7 +378,7 @@ function Custom() {
   return (<section > <div ref={colorchangeref} className='text-amber-50 inset-0 z-40 text-center'> 
 
     <div className="flex justify-end gap-3  ">
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 pointer-events-auto">
         {colors.map((colorItem) => {
           const isSelected = snap.goldcolor === colorItem.hex
 
